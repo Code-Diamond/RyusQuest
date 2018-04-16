@@ -31,27 +31,20 @@ public class Gui extends JFrame implements KeyListener
 		panel.setLayout(null);
 		add(panel);
 		setVisible(true);
-	}
-	
-	
-	
-	public void addProgressBar()
+	}	
+	public void render()
 	{
-		JProgressBar pb = new JProgressBar();
-		//75% of the way
-		pb.setValue(75);
-		pb.setBounds(250,125, 120,35);
-		this.panel.add(pb);
+		try {
+			this.panel.removeAll();
+			this.addRoboNinja();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		this.repaint();
+		this.revalidate();		
 	}
-	
-	public void addButton()
-	{
-		JButton button = new JButton("Compile");
-		button.setBounds(250,250,120,35);
-		this.panel.add(button);
-	}
-	
-	public void addImage() throws IOException
+	public void addRoboNinja() throws IOException
 	{
         String path = "images/roboNinja01.png";
         File file = new File(path);
@@ -60,44 +53,50 @@ public class Gui extends JFrame implements KeyListener
 		this.panel.add(label);
 		label.setBounds(x, y,50,50);
 	}
-	
-	public void render()
+	public void addProgressBar()
 	{
-		try {
-			this.panel.removeAll();
-			this.addImage();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		this.repaint();
-		this.revalidate();		
+		JProgressBar pb = new JProgressBar();
+		//75% of the way
+		pb.setValue(75);
+		pb.setBounds(250,125, 120,35);
+		this.panel.add(pb);
 	}
-	
+	public void addButton()
+	{
+		JButton button = new JButton("Compile");
+		button.setBounds(250,250,120,35);
+		this.panel.add(button);
+	}
 	public void keyPressed(KeyEvent e) 
 	{
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
-			x-=15;
+			if(x>16)
+			{
+				x-=15;	
+			}
 		}
-		
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
-			x+=15;
+			if(x<1200)
+			{
+				x+=15;	
+			}	
 		}
-		
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
-			y+=15;
+			if(y<950)
+			{
+				y+=15;	
+			}	
 		}
-		
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
-			y-=15;
+			if(y > 16)
+			{
+				y-=15;	
+			}
 		}
-		
-		
-		
 	}
 
 
@@ -115,32 +114,23 @@ public class Gui extends JFrame implements KeyListener
 	
 	
 	
-	
-	
-	
-	
-	
 	public static void main(String[] args) throws IOException
 	{
 		Gui gui = new Gui();
-		//gui.addButton();
-		//gui.addProgressBar();
-		gui.addImage();
+
+		gui.addRoboNinja();
 		while(true)
 		{
 			gui.render();
 			
-			try {
+			try 
+			{
 				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (InterruptedException e) 
+			{
 				e.printStackTrace();
 			}
-		}
-		
-		
+		}	
 	}
-	
-	
-	
 }
