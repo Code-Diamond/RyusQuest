@@ -18,10 +18,11 @@ public class Gui extends JFrame implements KeyListener
 	private JPanel panel = new JPanel();
 	private int x = 250, y = 800;
 	private int brickX = 250, brickY = 250;
+	private int tick = 0;
 	public Gui()
 	{
 		super();
-		setTitle("RYU'S QUEST!");
+		setTitle("                                                                                                                                                                                                RYU'S QUEST!");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -35,12 +36,15 @@ public class Gui extends JFrame implements KeyListener
 	}	
 	public void render()
 	{
-		try {
+		try 
+		{
 			this.panel.removeAll();
 			this.addRoboNinja();
 			this.addBrick();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			this.addTick();
+		} 
+		catch (IOException e1) 
+		{
 			e1.printStackTrace();
 		}
 		this.repaint();
@@ -63,6 +67,12 @@ public class Gui extends JFrame implements KeyListener
         JLabel label = new JLabel(new ImageIcon(image));
 		this.panel.add(label);
 		label.setBounds(brickX, brickY,50,50);
+	}
+	public void addTick() throws IOException
+	{
+        JLabel label = new JLabel("Tick: "+tick);
+		this.panel.add(label);
+		label.setBounds(0, 0,5000,50);
 	}
 	public void addProgressBar()
 	{
@@ -145,7 +155,6 @@ public class Gui extends JFrame implements KeyListener
 	public static void main(String[] args) throws IOException
 	{
 		Gui gui = new Gui();
-
 		gui.addRoboNinja();
 		gui.addBrick();
 		while(true)
@@ -155,6 +164,7 @@ public class Gui extends JFrame implements KeyListener
 			try 
 			{
 				Thread.sleep(10);
+				gui.tick++;
 			} 
 			catch (InterruptedException e) 
 			{
