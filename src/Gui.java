@@ -61,64 +61,39 @@ public class Gui extends JFrame implements KeyListener
 		label.setBounds(x, y,50,50);
 	}
 	
-
+	public void render()
+	{
+		try {
+			this.panel.removeAll();
+			this.addImage();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		this.repaint();
+		this.revalidate();		
+	}
 	
 	public void keyPressed(KeyEvent e) 
 	{
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
 			x-=15;
-			try {
-				this.panel.removeAll();
-				this.addImage();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			this.repaint();
-			this.revalidate();
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
 			x+=15;
-			try {
-				this.panel.removeAll();
-				this.addImage();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			this.repaint();
-			this.revalidate();
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
 			y+=15;
-			try {
-				this.panel.removeAll();
-				this.addImage();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			this.repaint();
-			this.revalidate();
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
 			y-=15;
-			try {
-				this.panel.removeAll();
-				this.addImage();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			this.repaint();
-			this.revalidate();
 		}
 		
 		
@@ -151,6 +126,17 @@ public class Gui extends JFrame implements KeyListener
 		//gui.addButton();
 		//gui.addProgressBar();
 		gui.addImage();
+		while(true)
+		{
+			gui.render();
+			
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		
 	}
