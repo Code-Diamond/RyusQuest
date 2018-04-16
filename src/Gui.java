@@ -17,6 +17,7 @@ public class Gui extends JFrame implements KeyListener
 {
 	private JPanel panel = new JPanel();
 	private int x = 250, y = 800;
+	private int brickX = 250, brickY = 250;
 	public Gui()
 	{
 		super();
@@ -37,6 +38,7 @@ public class Gui extends JFrame implements KeyListener
 		try {
 			this.panel.removeAll();
 			this.addRoboNinja();
+			this.addBrick();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -52,6 +54,15 @@ public class Gui extends JFrame implements KeyListener
         JLabel label = new JLabel(new ImageIcon(image));
 		this.panel.add(label);
 		label.setBounds(x, y,50,50);
+	}
+	public void addBrick() throws IOException
+	{
+        String path = "images/Brick01.png";
+        File file = new File(path);
+        BufferedImage image = ImageIO.read(file);
+        JLabel label = new JLabel(new ImageIcon(image));
+		this.panel.add(label);
+		label.setBounds(brickX, brickY,50,50);
 	}
 	public void addProgressBar()
 	{
@@ -73,28 +84,45 @@ public class Gui extends JFrame implements KeyListener
 		{
 			if(x>16)
 			{
-				x-=15;	
+				if(x-15 > brickX+50 || x-15 < brickX || y > brickY+50 || y < brickY-50)
+				{
+					x-=15;
+				}
+					
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
 			if(x<1200)
 			{
-				x+=15;	
+				if(x+15 > brickX+50 || x+65 < brickX || y > brickY+50 || y < brickY-50)
+				{
+					x+=15;	
+				}
+				
+
 			}	
 		}
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
 			if(y<950)
 			{
-				y+=15;	
+				if(y+15 > brickY+50 || y+65 < brickY || x > brickX+50 || x < brickX-50)
+				{
+					y+=15;
+				}
+	
 			}	
 		}
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
 			if(y > 16)
 			{
-				y-=15;	
+				if(y-15 > brickY+50 || y-15 < brickY || x > brickX+50 || x < brickX-50)
+				{
+					y-=15;
+				}		
+	
 			}
 		}
 	}
@@ -119,6 +147,7 @@ public class Gui extends JFrame implements KeyListener
 		Gui gui = new Gui();
 
 		gui.addRoboNinja();
+		gui.addBrick();
 		while(true)
 		{
 			gui.render();
