@@ -4,6 +4,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,6 +21,9 @@ public class Gui extends JFrame implements KeyListener
 	private int x = 250, y = 800;
 	private int brickX = 250, brickY = 250;
 	private int tick = 0;
+	
+	List<List<JLabel>> map = new ArrayList<List<JLabel>>();
+	
 	public Gui()
 	{
 		super();
@@ -50,14 +55,12 @@ public class Gui extends JFrame implements KeyListener
 		this.repaint();
 		this.revalidate();		
 	}
+	
+	
 	public void addRoboNinja() throws IOException
 	{
-        String path = "images/roboNinja01.png";
-        File file = new File(path);
-        BufferedImage image = ImageIO.read(file);
-        JLabel label = new JLabel(new ImageIcon(image));
-		this.panel.add(label);
-		label.setBounds(x, y,50,50);
+		RoboNinja roboNinja = new RoboNinja(x,y);
+		this.panel.add(roboNinja);
 	}
 	public void addBrick() throws IOException
 	{
