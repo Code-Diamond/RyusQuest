@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,16 +19,18 @@ import javax.swing.JProgressBar;
 public class Gui extends JFrame implements KeyListener
 {
 	private JPanel panel = new JPanel();
-	private int playerX = 250, playerY = 800;
-	private int brickX = 325, brickY = 800;
-	private int tick = 0;
 	
+	private int playerX = 250,
+				playerY = 800;
 	private static RoboNinja roboNinja;
 	private final int MOVEMENTSPEED = 10;
+	private Random random = new Random();
 	
-	private Brick brick;
-	private JLabel ticker;
+	private JLabel ticker;	
+	private int tick = 0;
 	
+	public static List<Brick> brickList = new ArrayList<Brick>();
+
 	private List<List<JLabel>> map = new ArrayList<List<JLabel>>();
 	
 	public Gui()
@@ -51,7 +54,11 @@ public class Gui extends JFrame implements KeyListener
 		{
 			this.panel.removeAll();
 			this.addRoboNinja();
-			this.addBrick();
+			for(int i = 0; i < brickList.size(); i++)
+			{
+				this.addBrick(brickList.get(i));	
+			}
+			
 			this.addTick();
 		} 
 		catch (IOException e1) 
@@ -68,11 +75,18 @@ public class Gui extends JFrame implements KeyListener
 		roboNinja = new RoboNinja(playerX,playerY);
 		this.panel.add(roboNinja);
 	}
-	public void addBrick() throws IOException
+	public void addBrick(int xCor, int yCor) throws IOException
 	{
-		brick = new Brick(brickX, brickY);
+		Brick brick = new Brick(xCor,yCor);
+		brickList.add(brick);
 		this.panel.add(brick);
 	}
+	
+	public void addBrick(Brick brick) throws IOException
+	{
+		this.panel.add(brick);
+	}
+	
 	public void addTick() throws IOException
 	{
         ticker = new JLabel("Tick: "+tick);
@@ -98,51 +112,115 @@ public class Gui extends JFrame implements KeyListener
 		//Going left
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
-			if(playerX>MOVEMENTSPEED)
+			boolean collided = false;
+			for(int i = 0; i < brickList.size(); i++)
 			{
-				if(roboNinja.getLeft()-MOVEMENTSPEED > brick.getRight() || roboNinja.getLeft()-MOVEMENTSPEED < brick.getLeft() || roboNinja.getTop() > brick.getBottom() || roboNinja.getBottom() < brick.getTop())
+				if(playerX>MOVEMENTSPEED)
 				{
-					playerX-=MOVEMENTSPEED;
+					if(roboNinja.getLeft()-MOVEMENTSPEED > brickList.get(i).getRight() || roboNinja.getLeft()-MOVEMENTSPEED <  brickList.get(i).getLeft() || roboNinja.getTop() >  brickList.get(i).getBottom() || roboNinja.getBottom() <  brickList.get(i).getTop())
+					{
+						//Purposely blank
+					}
+					else
+					{
+						collided = true;
+					}
 				}
-					
+				else
+				{
+					collided = true;
+				}
 			}
+			if(!collided)
+			{
+				playerX-=MOVEMENTSPEED;	
+			}
+			
+
 		}
 		//Going Right
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
-			if(playerX<1200)
+			boolean collided = false;
+			for(int i = 0; i < brickList.size(); i++)
 			{
-				if(roboNinja.getLeft()+MOVEMENTSPEED > brick.getRight() || roboNinja.getRight()+MOVEMENTSPEED < brick.getLeft() || roboNinja.getTop() > brick.getBottom() || roboNinja.getBottom() < brick.getTop())
+				if(playerX<1200)
 				{
-					playerX+=MOVEMENTSPEED;	
+					if(roboNinja.getLeft()+MOVEMENTSPEED >  brickList.get(i).getRight() || roboNinja.getRight()+MOVEMENTSPEED <  brickList.get(i).getLeft() || roboNinja.getTop() >  brickList.get(i).getBottom() || roboNinja.getBottom() <  brickList.get(i).getTop())
+					{
+						//Purposely blank
+					}
+					else
+					{
+						collided = true;
+					}
 				}
-				
-
-			}	
+				else
+				{
+					collided = true;
+				}
+			}
+			if(!collided)
+			{
+				playerX+=MOVEMENTSPEED;		
+			}
+	
 		}
 		//Going Down
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
-			if(playerY<950)
+			boolean collided = false;
+			for(int i = 0; i < brickList.size(); i++)
 			{
-				if(roboNinja.getBottom()+MOVEMENTSPEED < brick.getTop() || roboNinja.getTop()+MOVEMENTSPEED > brick.getBottom() || roboNinja.getLeft() > brick.getRight() || roboNinja.getRight() < brick.getLeft())
+				if(playerY<950)
 				{
-					playerY+=MOVEMENTSPEED;
+					if(roboNinja.getBottom()+MOVEMENTSPEED <  brickList.get(i).getTop() || roboNinja.getTop()+MOVEMENTSPEED >  brickList.get(i).getBottom() || roboNinja.getLeft() >  brickList.get(i).getRight() || roboNinja.getRight() <  brickList.get(i).getLeft())
+					{
+						//Purposely Blank
+					}
+					else
+					{
+						collided = true;
+					}
+				}	
+				else
+				{
+					collided = true;
 				}
-	
-			}	
+			}
+			if(!collided)
+			{
+				playerY+=MOVEMENTSPEED;
+			}
+
 		}
 		//Going Up
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
-			if(playerY > MOVEMENTSPEED)
+			boolean collided = false;
+			for(int i = 0; i < brickList.size(); i++)
 			{
-				if(roboNinja.getBottom()-MOVEMENTSPEED < brick.getTop() || roboNinja.getTop()-MOVEMENTSPEED > brick.getBottom() || roboNinja.getLeft() > brick.getRight() || roboNinja.getRight() < brick.getLeft())
+				if(playerY > MOVEMENTSPEED)
 				{
-					playerY-=MOVEMENTSPEED;
-				}		
-	
+					if(roboNinja.getBottom()-MOVEMENTSPEED <  brickList.get(i).getTop() || roboNinja.getTop()-MOVEMENTSPEED >  brickList.get(i).getBottom() || roboNinja.getLeft() >  brickList.get(i).getRight() || roboNinja.getRight() <  brickList.get(i).getLeft())
+					{
+						//Purposely Blank
+					}
+					else
+					{
+						collided = true;
+					}
+				}	
+				else
+				{
+					collided = true;
+				}				
 			}
+			if(!collided)
+			{
+				playerY-=MOVEMENTSPEED;
+			}
+
 		}
 	}
 
@@ -165,7 +243,12 @@ public class Gui extends JFrame implements KeyListener
 	{
 		Gui gui = new Gui();
 		gui.addRoboNinja();
-		gui.addBrick();
+		for(int i = 150; i <= 900; i+=150)
+		{
+			gui.addBrick(i,i);
+		}
+//		gui.addBrick(250,250);
+//		gui.addBrick(500,500);
 		while(true)
 		{
 			gui.render();
@@ -179,7 +262,7 @@ public class Gui extends JFrame implements KeyListener
 			{
 				e.printStackTrace();
 			}
-			System.out.println("entity method:"+roboNinja.getLeft());
+//			System.out.println("entity method:"+roboNinja.getLeft());
 		}
 		
 		
@@ -187,3 +270,4 @@ public class Gui extends JFrame implements KeyListener
 		
 	}
 }
+
