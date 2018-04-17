@@ -6,10 +6,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class RoboNinja extends JLabel
+public class RoboNinja extends Entity
 {
-	public int x;
-	public int y;
 	
 	public RoboNinja(int startX, int startY) throws IOException
 	{
@@ -19,6 +17,10 @@ public class RoboNinja extends JLabel
         BufferedImage image = ImageIO.read(file);
 		setIcon(new ImageIcon(image));
 		setBounds(startX,startY,50,50);
-		
+		x=startX;
+		y=startY;
 	}
+	
+
+	
 }

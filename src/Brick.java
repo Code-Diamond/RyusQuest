@@ -6,10 +6,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class Brick extends JLabel
+public class Brick extends Entity
 {
-	public int x;
-	public int y;
 	
 	public Brick(int startX, int startY) throws IOException
 	{
@@ -19,6 +17,11 @@ public class Brick extends JLabel
         BufferedImage image = ImageIO.read(file);
 		setIcon(new ImageIcon(image));
 		setBounds(startX,startY,50,50);
-	
+		x=startX;
+		y=startY;
 	}
+	
+	
+	
+	
 }

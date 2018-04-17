@@ -18,11 +18,11 @@ import javax.swing.JProgressBar;
 public class Gui extends JFrame implements KeyListener
 {
 	private JPanel panel = new JPanel();
-	private int x = 250, y = 800;
+	private int playerX = 250, playerY = 800;
 	private int brickX = 250, brickY = 250;
 	private int tick = 0;
 	
-	private RoboNinja roboNinja;
+	private static RoboNinja roboNinja;
 	private Brick brick;
 	private JLabel ticker;
 	
@@ -63,7 +63,7 @@ public class Gui extends JFrame implements KeyListener
 	
 	public void addRoboNinja() throws IOException
 	{
-		roboNinja = new RoboNinja(x,y);
+		roboNinja = new RoboNinja(playerX,playerY);
 		this.panel.add(roboNinja);
 	}
 	public void addBrick() throws IOException
@@ -95,22 +95,22 @@ public class Gui extends JFrame implements KeyListener
 	{
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
-			if(x>16)
+			if(playerX>16)
 			{
-				if(x-15 > brickX+50 || x-15 < brickX || y > brickY+50 || y < brickY-50)
+				if(playerX-15 > brickX+50 || playerX-15 < brickX || playerY > brickY+50 || playerY < brickY-50)
 				{
-					x-=15;
+					playerX-=15;
 				}
 					
 			}
 		}
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
-			if(x<1200)
+			if(playerX<1200)
 			{
-				if(x+15 > brickX+50 || x+65 < brickX || y > brickY+50 || y < brickY-50)
+				if(playerX+15 > brickX+50 || playerX+65 < brickX || playerY > brickY+50 || playerY < brickY-50)
 				{
-					x+=15;	
+					playerX+=15;	
 				}
 				
 
@@ -118,22 +118,22 @@ public class Gui extends JFrame implements KeyListener
 		}
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
-			if(y<950)
+			if(playerY<950)
 			{
-				if(y+15 > brickY+50 || y+65 < brickY || x > brickX+50 || x < brickX-50)
+				if(playerY+15 > brickY+50 || playerY+65 < brickY || playerX > brickX+50 || playerX < brickX-50)
 				{
-					y+=15;
+					playerY+=15;
 				}
 	
 			}	
 		}
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
-			if(y > 16)
+			if(playerY > 16)
 			{
-				if(y-15 > brickY+50 || y-15 < brickY || x > brickX+50 || x < brickX-50)
+				if(playerY-15 > brickY+50 || playerY-15 < brickY || playerX > brickX+50 || playerX < brickX-50)
 				{
-					y-=15;
+					playerY-=15;
 				}		
 	
 			}
@@ -173,6 +173,11 @@ public class Gui extends JFrame implements KeyListener
 			{
 				e.printStackTrace();
 			}
-		}	
+			System.out.println("entity method:"+roboNinja.getLeft());
+		}
+		
+		
+		
+		
 	}
 }
