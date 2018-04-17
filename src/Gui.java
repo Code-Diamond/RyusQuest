@@ -29,9 +29,13 @@ public class Gui extends JFrame implements KeyListener
 	private JLabel ticker;	
 	private int tick = 0;
 	
+	private static int explosionAnimationCounter = 1;
 	public static List<Brick> brickList = new ArrayList<Brick>();
 
 	private List<List<JLabel>> map = new ArrayList<List<JLabel>>();
+	
+	
+	private static Explosion explosion;
 	
 	public Gui()
 	{
@@ -60,6 +64,19 @@ public class Gui extends JFrame implements KeyListener
 			}
 			
 			this.addTick();
+			this.addExplosion(500,20,explosionAnimationCounter);
+			if(tick%10==0)
+			{
+				if(explosionAnimationCounter < 7)
+				{
+					explosionAnimationCounter++;
+				}
+				else
+				{
+					explosionAnimationCounter  = 1;
+				}				
+			}
+
 		} 
 		catch (IOException e1) 
 		{
@@ -85,6 +102,12 @@ public class Gui extends JFrame implements KeyListener
 	public void addBrick(Brick brick) throws IOException
 	{
 		this.panel.add(brick);
+	}
+	
+	public void addExplosion(int x, int y, int animationCounter) throws IOException
+	{
+		explosion = new Explosion(x,y,animationCounter);
+		this.panel.add(explosion);
 	}
 	
 	public void addTick() throws IOException
@@ -247,12 +270,13 @@ public class Gui extends JFrame implements KeyListener
 		{
 			gui.addBrick(i,i);
 		}
-//		gui.addBrick(250,250);
-//		gui.addBrick(500,500);
+		
+		explosion = new Explosion(500,20,explosionAnimationCounter);
+		gui.add(explosion);
 		while(true)
 		{
 			gui.render();
-			
+
 			try 
 			{
 				Thread.sleep(10);
