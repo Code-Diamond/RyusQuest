@@ -19,10 +19,12 @@ public class Gui extends JFrame implements KeyListener
 {
 	private JPanel panel = new JPanel();
 	private int playerX = 250, playerY = 800;
-	private int brickX = 250, brickY = 250;
+	private int brickX = 325, brickY = 800;
 	private int tick = 0;
 	
 	private static RoboNinja roboNinja;
+	private final int MOVEMENTSPEED = 10;
+	
 	private Brick brick;
 	private JLabel ticker;
 	
@@ -93,47 +95,51 @@ public class Gui extends JFrame implements KeyListener
 	}
 	public void keyPressed(KeyEvent e) 
 	{
+		//Going left
 		if(e.getKeyCode() == KeyEvent.VK_A)
 		{
-			if(playerX>16)
+			if(playerX>MOVEMENTSPEED)
 			{
-				if(playerX-15 > brickX+50 || playerX-15 < brickX || playerY > brickY+50 || playerY < brickY-50)
+				if(roboNinja.getLeft()-MOVEMENTSPEED > brick.getRight() || roboNinja.getLeft()-MOVEMENTSPEED < brick.getLeft() || roboNinja.getTop() > brick.getBottom() || roboNinja.getBottom() < brick.getTop())
 				{
-					playerX-=15;
+					playerX-=MOVEMENTSPEED;
 				}
 					
 			}
 		}
+		//Going Right
 		if(e.getKeyCode() == KeyEvent.VK_D)
 		{
 			if(playerX<1200)
 			{
-				if(playerX+15 > brickX+50 || playerX+65 < brickX || playerY > brickY+50 || playerY < brickY-50)
+				if(roboNinja.getLeft()+MOVEMENTSPEED > brick.getRight() || roboNinja.getRight()+MOVEMENTSPEED < brick.getLeft() || roboNinja.getTop() > brick.getBottom() || roboNinja.getBottom() < brick.getTop())
 				{
-					playerX+=15;	
+					playerX+=MOVEMENTSPEED;	
 				}
 				
 
 			}	
 		}
+		//Going Down
 		if(e.getKeyCode() == KeyEvent.VK_S)
 		{
 			if(playerY<950)
 			{
-				if(playerY+15 > brickY+50 || playerY+65 < brickY || playerX > brickX+50 || playerX < brickX-50)
+				if(roboNinja.getBottom()+MOVEMENTSPEED < brick.getTop() || roboNinja.getTop()+MOVEMENTSPEED > brick.getBottom() || roboNinja.getLeft() > brick.getRight() || roboNinja.getRight() < brick.getLeft())
 				{
-					playerY+=15;
+					playerY+=MOVEMENTSPEED;
 				}
 	
 			}	
 		}
+		//Going Up
 		if(e.getKeyCode() == KeyEvent.VK_W)
 		{
-			if(playerY > 16)
+			if(playerY > MOVEMENTSPEED)
 			{
-				if(playerY-15 > brickY+50 || playerY-15 < brickY || playerX > brickX+50 || playerX < brickX-50)
+				if(roboNinja.getBottom()-MOVEMENTSPEED < brick.getTop() || roboNinja.getTop()-MOVEMENTSPEED > brick.getBottom() || roboNinja.getLeft() > brick.getRight() || roboNinja.getRight() < brick.getLeft())
 				{
-					playerY-=15;
+					playerY-=MOVEMENTSPEED;
 				}		
 	
 			}
