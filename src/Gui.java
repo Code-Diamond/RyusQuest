@@ -22,7 +22,11 @@ public class Gui extends JFrame implements KeyListener
 	private int brickX = 250, brickY = 250;
 	private int tick = 0;
 	
-	List<List<JLabel>> map = new ArrayList<List<JLabel>>();
+	private RoboNinja roboNinja;
+	private Brick brick;
+	private JLabel ticker;
+	
+	private List<List<JLabel>> map = new ArrayList<List<JLabel>>();
 	
 	public Gui()
 	{
@@ -55,27 +59,23 @@ public class Gui extends JFrame implements KeyListener
 		this.repaint();
 		this.revalidate();		
 	}
-	
+
 	
 	public void addRoboNinja() throws IOException
 	{
-		RoboNinja roboNinja = new RoboNinja(x,y);
+		roboNinja = new RoboNinja(x,y);
 		this.panel.add(roboNinja);
 	}
 	public void addBrick() throws IOException
 	{
-        String path = "images/Brick01.png";
-        File file = new File(path);
-        BufferedImage image = ImageIO.read(file);
-        JLabel label = new JLabel(new ImageIcon(image));
-		this.panel.add(label);
-		label.setBounds(brickX, brickY,50,50);
+		brick = new Brick(brickX, brickY);
+		this.panel.add(brick);
 	}
 	public void addTick() throws IOException
 	{
-        JLabel label = new JLabel("Tick: "+tick);
-		this.panel.add(label);
-		label.setBounds(0, 0,5000,50);
+        ticker = new JLabel("Tick: "+tick);
+		this.panel.add(ticker);
+		ticker.setBounds(0, 0,5000,50);
 	}
 	public void addProgressBar()
 	{
